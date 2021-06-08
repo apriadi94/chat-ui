@@ -31,7 +31,7 @@ export const AuthProvider = ({Auth, children}) => {
         socket.connect();
           
     }, [])
-    const AuthState = { socket, username, setTo }
+    const AuthState = { socket, username, to, setTo }
     return(
         <AuthContext.Provider value={AuthState}>
             {children}
