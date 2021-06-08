@@ -15,3 +15,8 @@ code {
 img {
   border-radius: 50%;
 }
+
+.chat-content{
+  height: 400px;
+  overflow-y: auto;
+}

@@ -24,7 +24,7 @@ const ContactComponent = () => {
     }, [])
     return (
         <div>
-            <p>List Conversation</p>
+            <h1>List Conversation</h1>
             <p>----------------------------------------------------------</p>
             {
                 User.map((list, index) => 

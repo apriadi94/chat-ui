@@ -1,4 +1,5 @@
 import ContactComponent from '../../komponent/chat/ContactComponent'
+import ChatContentComponent from '../../komponent/chat/ChatContentComponent'
 
 const ChatPage = () => {
     return(
@@ -8,7 +9,7 @@ const ChatPage = () => {
                     <ContactComponent/>
                </div>
                <div className='col-md-6'>
-                    <h1>chat component</h1>   
+                    <ChatContentComponent/>
                 </div>
            </div>
        </div>
