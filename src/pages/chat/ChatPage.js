@@ -1,7 +1,17 @@
+import ContactComponent from '../../komponent/chat/ContactComponent'
 
 const ChatPage = () => {
     return(
-        <h1>chat</h1>
+       <div className='container'>
+           <div className='row'>
+               <div className='col-md-6'>
+                    <ContactComponent/>
+               </div>
+               <div className='col-md-6'>
+                    <h1>chat component</h1>   
+                </div>
+           </div>
+       </div>
     )
 }
 
