@@ -1,13 +1,16 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import loginPage from './pages/loginPage'
+import { useState } from "react";
+import { AuthProvider } from './provider/AuthProvider'
+import LoginPage from './pages/login/LoginPage'
+import ChatPage from './pages/chat/ChatPage'
 
 export default function App() {
+  const [Auth, setAuth] = useState({userId : null, username : ''})
   return (
-    <Router>
-        <Switch>
-          <Route path="/login" component={loginPage} />
-        </Switch>
-    </Router>
+    Auth.userId === null ?
+    <LoginPage setAuth={setAuth}/>
+    :
+    <AuthProvider Auth={Auth}>
+       <ChatPage/>
+    </AuthProvider>
   );
 }
