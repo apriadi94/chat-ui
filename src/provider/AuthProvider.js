@@ -8,7 +8,14 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({Auth, children}) => {
     const [username, setusername] = useState(Auth.username)
-    const token = 'ask_your_tech_lead';
+    
+    const [to, setTo] = useState({
+        id: '',
+        id_chat : null,
+        name: '',
+        profileImg: '',
+    })
+
     
     const socket = socketIOClient(ENDPOINT, {
         query : {
@@ -24,7 +31,7 @@ export const AuthProvider = ({Auth, children}) => {
         socket.connect();
           
     }, [])
-    const AuthState = { socket, username }
+    const AuthState = { socket, username, setTo }
     return(
         <AuthContext.Provider value={AuthState}>
             {children}
