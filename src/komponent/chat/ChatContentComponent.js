@@ -24,20 +24,22 @@ const ChatContentComponent = () => {
         socket.emit('FETCH_MESSAGE', to, Page, Search);
         socket.on('MESSAGE_SENT', async (messageList, ArraySearch) => {
             setListSearchCaht(ArraySearch)
-            const newData = messageList.map(item => {
-                return{
-                    ...item
-                }
-            })
-            setChat(newData)
+            setChat(messageList)
             socket.emit('READ_MESSAGE', to)
             setLoading(false)
+        });
+        socket.on('PRIVATE_MESSAGE_SENT', (message, to) => {
+            setChat(Chat => [...Chat, message])
+            if (to.id_chat !== null) {
+                socket.emit('READ_MESSAGE', to)
+            }   
         });
        }
     }, [to, Search])
 
 
-    const SearchUpChat = () => {
+    const SearchUpChat = (e) => {
+        e.preventDefault();
         if(ListSearchChat[OnIndexSerach]){
             socket.emit('FETCH_PREV_SEARCH_MESSAGE', to, ListSearchChat[OnIndexSerach].page, Search);
             socket.on('PREV_SEARCH_MESSAGE_SENT', (messageList, LasPage) => {
@@ -52,7 +54,10 @@ const ChatContentComponent = () => {
         }
     }
 
-    
+    const SendChat = () => {
+        socket.emit('SEND_PRIVATE_MESSAGE', content, [to])
+        setcontent({type : 'TEXT', content : ''})
+    }
 
     return(
         <div>
@@ -61,7 +66,11 @@ const ChatContentComponent = () => {
             <div>
             <FormGroup>
                 <Label for="exampleEmail">Search</Label>
-                <Input value={Search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="cari text" />
+                <Input value={Search} onChange={(e) => {
+                    setSearch(e.target.value)
+                    setOnIndexSearch(0)
+                    setOnPageSearch(null)
+                }} type="text" placeholder="cari text" />
             </FormGroup>
             <button onClick={SearchUpChat}>Up</button>
             </div>
@@ -92,6 +101,12 @@ const ChatContentComponent = () => {
                 )
             }
             </div>
+            <FormGroup>
+                <Input value={content.content} onChange={(e) => {
+                    setcontent({...content, content : e.target.value})
+                }} type="text" placeholder="kirim pesan" />
+            </FormGroup>
+            <button onClick={SendChat}>kirim</button>
         </div>
     )
 }
